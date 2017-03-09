@@ -1,6 +1,6 @@
 // Braden Blackwell
 
-// The logic for my code implements the rule set foung here:
+// The logic for my code implements the rule set found here:
 // http://media.wizards.com/2016/downloads/DND/PlayerBasicRulesV03.pdf
 // https://media.wizards.com/2014/downloads/dnd/DMBasicRulesv.0.3.pdf
 
