@@ -12,7 +12,92 @@ struct dice
 private:
 
 public:
+    // add more dice
     int rolld20();
+};
+
+struct sizeEntity
+{
+    /*
+    Tiny <=2ï¿½ by 2ï¿½ ft.
+    Small <=5 by 5 ft.
+    Medium <=5 by 5 ft.
+    Large <=10 by 10 ft.
+    Huge <=15 by 15 ft.
+    Gargantuan >=20 by 20 ft.
+    */
+public:
+    enum sizestr {Tiny, Small, Medium, Large, Huge, Gargantuan};
+
+    // in feet
+    std::string sizeName;
+    double height = 0;
+    double width = 0;
+
+    sizeEntity(std::string s)
+    {
+        sizeName = s;
+        makeSizeStr(s, height, width);
+    }
+    sizeEntity(double h, double w)
+    {
+       height = h;
+       width = w;
+       makeSizeDem(sizeName, h, w);
+    }
+
+private:
+    // only size given in a string
+    // assume that height and width are equal
+    void makeSizeStr(std::string s, double& h, double& w)
+    {
+        if(s == getString(Tiny))
+            h = w = 2.5;
+        else if(s == getString(Small))
+            h = w = 5;
+        else if(s == getString(Medium))
+            h = w = 5;
+        else if(s == getString(Large))
+            h = w = 10;
+        else if(s == getString(Huge))
+            h = w = 15;
+        else if(s == getString(Gargantuan))
+            h = w = 20;
+
+        // invalid string
+        else
+            throw "invalid string";
+    }
+
+    // only size given in a two doubles
+    // decide the string name
+    // might need parameter for small and medium
+    void makeSizeDem(std::string& s, double h, double w)
+    {
+        // negative area
+        if (h < 0 || w  < 0)
+            throw "negative area";
+
+        else if(h <= 2.5 && w <= 2.5)
+            s = getString(Tiny);
+        else if(h <= 5 && w <= 5)
+            s = getString(Small);
+        // same as small but depends on unit
+        else if(h <= 5 && w <= 5)
+            s = getString(Medium);
+        else if(h <= 10 && w <= 10)
+            s = getString(Large);
+        else if(h <= 15 && w <= 15)
+            s = getString(Huge);
+        else
+            s = getString(Gargantuan);
+    }
+
+    static constexpr char* enumStrings[] = { "Tiny", "Small", "Medium", "Large", "Huge", "Gargantuan"};
+    const char* getString(sizestr id)
+    {
+      return enumStrings[id];
+    }
 };
 
 class Entity
@@ -24,9 +109,6 @@ private:
     std::string ideals = "";
     std::string bonds = "";
     std::string flaws = "";
-
-    std::string validSize[6] = {"Tiny", "Small", "Medium", "Large", "Huge", "Gargantuan"};
-    std::string validAligment[9] = {"Lawful good", "Neutral good", "Chaotic good", "Lawful neutral", "Neutral", "Chaotic neutral", "Lawful evil", "Neutral evil", "Chaotic evil"};
 
     int mod(int ability)
     {
@@ -77,7 +159,7 @@ private:
         int roll = dice.rolld20();
 
         attack = calcAttack(roll, ability); //magic BS
-        defense = entity.armor_class;
+        defense = entity.armorClass;
 
         if(roll == 20)
             critHit = true;
@@ -114,7 +196,7 @@ private:
 
 public:
     int health = 0;
-    int armor_class = 0;
+    int armorClass = 0;
     int level = 0;
     int experience = 0;
 
@@ -142,21 +224,16 @@ public:
     // inventory
 
 
-    /*
-    Tiny 2½ by 2½ ft.
-    Small 5 by 5 ft.
-    Medium 5 by 5 ft.
-    Large 10 by 10 ft.
-    Huge 15 by 15 ft.
-    Gargantuan 20 by 20 ft.
-    */
 
-    std::string size = "";
 
-    double height = 0;
-    double width = 0;
 
-    std::string alignment = "";
+    // All possible alignments
+    enum Aligment {LG, NG, CG, LN, TN,CN, LE, NE, CE};
+    static constexpr char* enumStrings[9] = {"Lawful good", "Neutral good", "Chaotic good", "Lawful neutral", "True Neutral", "Chaotic neutral", "Lawful evil", "Neutral evil", "Chaotic evil"};
+    const char* getAligment(Aligment id)
+    {
+      return enumStrings[id];
+    }
 
 
     // speed
@@ -193,9 +270,10 @@ public:
     }
 };
 
-class Monster
+class Monster : Entity
 {
 private:
+    // maybe make class??
     std::string validType[14] = {"Aberration", "Beast", "Celestial", "Construct", "Dragon", "Elemental", "Fey", "Fiend", "Giant", "Humanoid", "Monstrosity", "Ooze", "Plant", "Undead"};
 public:
     std::string type = "";
@@ -203,12 +281,12 @@ public:
     double challenge = 0;
 };
 
-class PlayerChar
+class PlayerChar : Entity
 {
 private:
-    std::string validRace[4] = {"Dwarf", "Elf", "Halfling", "Human"};
-    std::string validPlayerClass[4] = {"Cleric", "Fighter", "Rogue", "Wizard"};
-    std::string validBackgrounds[6] = {"Acolyte", "Criminal", "Folk Hero", "Noble", "Sage", "Soldier"};
+    std::string validRace[4] = {"Dwarf", "Elf", "Halfling", "Human"}; // make class
+    std::string validPlayerClass[4] = {"Cleric", "Fighter", "Rogue", "Wizard"};  // make class
+    std::string validBackgrounds[6] = {"Acolyte", "Criminal", "Folk Hero", "Noble", "Sage", "Soldier"};  // make enum
 public:
     std::string race = "";
     std::string playerClass = "";
