@@ -1,3 +1,48 @@
-[
-{}
-]
+ {
+  "Dan": {
+    "sex": true,
+    "age": 26,
+    "health": 0,
+    "armorClass": 0,
+    "level": 1,
+    "experience": 0,
+    "strength": 0,
+    "dexterity": 0,
+    "constitution": 0,
+    "intelligence": 0,
+    "wisdom": 0,
+    "charisma": 0,
+    "languages": [ "Common", "Dwarvish" ],
+    "magic": false,
+    "equipment": true,
+    "walk": 30,
+    "burrow": 0,
+    "climb": 15,
+    "fly": 0,
+    "swim": 10,
+    "Aligment":  "LG"
+  },
+  "Willow": {
+    "sex": false,
+    "age": 24,
+    "health": 0,
+    "armorClass": 0,
+    "level": 1,
+    "experience": 0,
+    "strength": 0,
+    "dexterity": 0,
+    "constitution": 0,
+    "intelligence": 0,
+    "wisdom": 0,
+    "charisma": 0,
+    "languages": [ "Common", "Elvish" ],
+    "magic": true,
+    "equipment": true,
+    "walk": 30,
+    "burrow": 0,
+    "climb": 15,
+    "fly": 0,
+    "swim": 10,
+    "Aligment": "LG"
+  }
+ }
